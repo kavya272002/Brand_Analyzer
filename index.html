@@ -142,7 +142,7 @@
       <h2 id="dashboardTitle" class="dashboard-title"></h2>
       <div class="dashboard-actions">
         <button id="refreshBtn" class="action-btn refresh-btn" title="Re-analyze with AI">🔄 Refresh AI</button>
-        <button id="exportBtn" class="action-btn export-btn" title="Export as PDF">📄 Export PDF</button>
+        <button id="exportBtn" class="action-btn export-btn premium-btn" title="Export as PDF (Premium)">📄 Export PDF <span class="premium-badge">₹100</span></button>
         <button id="shareBtn" class="action-btn share-btn" title="Share my analysis">📤 Share</button>
         <button id="compareBtn" class="action-btn compare-btn" title="Compare with another">⚖️ Compare</button>
       </div>
@@ -229,12 +229,34 @@
     </div>
 
     <!-- Compare Panel B -->
-    <div id="comparePanel" class="compare-panel" style="display:none;">
-      <div class="compare-panel-header">
-        <h3 id="comparePanelTitle">Comparing...</h3>
-        <button id="closeCompare" class="compare-close-btn">✕ Close Comparison</button>
+    <!-- Premium Unlock Modal -->
+    <div id="premiumModal" class="modal-overlay" style="display:none;">
+      <div class="modal-card premium-card">
+        <div class="modal-header">
+          <h3>💎 Premium Strategic Feature</h3>
+          <button id="closePremium" class="modal-close">✕</button>
+        </div>
+        <div class="modal-body premium-body">
+          <div class="premium-icon">📄</div>
+          <h4>Professional PDF Export</h4>
+          <p>Generate clean, professional, and audit-ready strategic reports for your business cases and presentations.</p>
+          
+          <div class="premium-price">₹100 <small>one-time unlock</small></div>
+          
+          <ul class="premium-features">
+            <li>✅ High-resolution PDF generation</li>
+            <li>✅ Removes all interactive UI elements for clean print</li>
+            <li>✅ Perfect for MBA Portfolio & Case Comp attachments</li>
+          </ul>
+
+          <div class="portfolio-demo-notice">
+            <p>💡 <strong>Portfolio Demo Mode:</strong> Since this is a project showcase, you can unlock this feature instantly to see it in action.</p>
+          </div>
+
+          <button id="unlockPremiumBtn" class="unlock-btn">🚀 Unlock High-Res PDF (Simulate)</button>
+          <p class="premium-note">🔒 We value your research. No real bank details needed for this demo.</p>
+        </div>
       </div>
-      <div id="compareContent" class="analysis-content compare-content"></div>
     </div>
 
     <!-- Footer -->
@@ -247,20 +269,18 @@
         <div class="footer-links">
           <h4>Experience</h4>
           <a href="#" class="footer-link">Portfolio</a>
-          <a href="https://www.linkedin.com/in/vashu-singhal/" target="_blank" class="footer-link">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/kavya-singhal/" target="_blank" class="footer-link">LinkedIn</a>
           <a href="#" class="footer-link">MBA Projects</a>
         </div>
         <div class="footer-cta">
-          <h4>Support the Project</h4>
-          <p>If this tool helped your research, consider supporting its development!</p>
-          <a href="https://buymeacoffee.com/vashusinghal" target="_blank" class="support-btn">
-            <span>☕ Buy Me a Coffee</span>
-          </a>
+          <h4>About the Tool</h4>
+          <p>Created to automate high-level business research and case study preparation. Built with an AI-first strategic methodology.</p>
+          <div class="portfolio-badge">MBA Portfolio Project</div>
         </div>
       </div>
       <div class="footer-bottom">
         <div class="footer-info">
-          <span>Created with ❤️ by <strong>Vashu Singhal</strong></span>
+          <span>Created with ❤️ by <strong>Kavya Singhal</strong></span>
           <span class="dot">•</span>
           <span id="sourceLabel" class="source-label"></span>
         </div>

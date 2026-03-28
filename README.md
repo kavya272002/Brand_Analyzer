@@ -34,4 +34,4 @@ A professional-grade, AI-first strategic analysis tool designed for MBA students
 ---
 
 Created with ❤️ by **Kavya Singhal**
-[LinkedIn](https://www.linkedin.com/in/vashu-singhal/) | [Portfolio](#)
+[LinkedIn](https://www.linkedin.com/in/kavya-singhal/) | [Portfolio](#)

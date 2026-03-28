@@ -40,10 +40,15 @@
   const welcomeApiKey = document.getElementById('welcomeApiKey');
   const welcomeConnectBtn = document.getElementById('welcomeConnectBtn');
   const welcomeStatus = document.getElementById('welcomeStatus');
-
+  
+  const premiumModal = document.getElementById('premiumModal');
+  const closePremium = document.getElementById('closePremium');
+  const unlockPremiumBtn = document.getElementById('unlockPremiumBtn');
+  
   const API_KEY_STORAGE = 'brandAnalyzer_geminiApiKey';
   const CACHE_STORAGE = 'brandAnalyzer_cache';
   const HISTORY_STORAGE = 'brandAnalyzer_history';
+  const PREMIUM_STORAGE = 'brandAnalyzer_premiumUnlocked';
 
   let currentQuery = '';
   let currentData = null;
@@ -339,8 +344,45 @@
   });
 
   exportBtn.addEventListener('click', () => {
+    const isUnlocked = localStorage.getItem(PREMIUM_STORAGE) === 'true';
+    if (!isUnlocked) {
+      premiumModal.style.display = 'flex';
+      return;
+    }
     window.print();
   });
+
+  closePremium.addEventListener('click', () => premiumModal.style.display = 'none');
+  premiumModal.addEventListener('click', (e) => {
+    if (e.target === premiumModal) premiumModal.style.display = 'none';
+  });
+
+  unlockPremiumBtn.addEventListener('click', () => {
+    unlockPremiumBtn.innerHTML = '⏳ Processing...';
+    unlockPremiumBtn.disabled = true;
+    
+    setTimeout(() => {
+      unlockPremiumBtn.innerHTML = '✅ Unlocked! Loading PDF...';
+      unlockPremiumBtn.style.background = 'var(--accent-green)';
+      
+      localStorage.setItem(PREMIUM_STORAGE, 'true');
+      checkPremiumStatus();
+      
+      setTimeout(() => {
+        premiumModal.style.display = 'none';
+        window.print();
+      }, 1000);
+    }, 1500);
+  });
+
+  function checkPremiumStatus() {
+    const isUnlocked = localStorage.getItem(PREMIUM_STORAGE) === 'true';
+    if (isUnlocked) {
+      exportBtn.classList.add('unlocked');
+      exportBtn.title = 'Premium Feature Unlocked — Export as PDF';
+    }
+  }
+  checkPremiumStatus();
 
   compareBtn.addEventListener('click', () => {
     compareBar.style.display = compareBar.style.display === 'none' ? 'block' : 'none';
