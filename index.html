@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brand & Industry Analyzer — AI-Powered Strategic Analysis</title>
+  <meta name="description" content="Analyze any brand or industry instantly. Get PESTEL, Porter's Five Forces, SWOT, gaps, and strategic recommendations powered by Gemini AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Strategic AI Brand & Industry Analyzer" />
+  <meta property="og:description" content="Professional-grade PESTEL, SWOT, and Industry Strategic Analysis for any brand or industry globally. Powered by Gemini AI." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vashu-singhal.github.io/brand-analyzer" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200" />
+  <meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+  <!-- Welcome Onboarding Overlay -->
+  <div id="welcomeOverlay" class="welcome-overlay" style="display: none;">
+    <div class="welcome-card animate-in">
+      <div class="welcome-header">
+        <div class="welcome-icon">🚀</div>
+        <h2>Welcome to Brand <span class="gradient-text">Analyzer</span></h2>
+        <p>Your professional AI-powered tool for MBA-level strategic analysis.</p>
+      </div>
+      <div class="welcome-body">
+        <div class="connect-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <h4>Get Your Free Key</h4>
+            <p>Get a free Gemini API key from <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a> (No credit card required).</p>
+          </div>
+        </div>
+        <div class="connect-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <h4>Connect Your Device</h4>
+            <p>Paste your key below. It's stored locally on your browser and only you use it. No server costs, no fees.</p>
+          </div>
+        </div>
+        <div class="api-input-container">
+          <input type="password" id="welcomeApiKey" class="welcome-api-input" placeholder="Paste your API key here..." />
+          <button id="welcomeConnectBtn" class="welcome-connect-btn">Connect & Start Analyzing →</button>
+        </div>
+        <p id="welcomeStatus" class="welcome-status"></p>
+      </div>
+      <div class="welcome-footer">
+        <p>🔒 <strong>Your Key is Secure:</strong> We never see your key. It remains on your device.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-content">
+      <div class="hero-badge">⚡ AI-Powered — Analyze Any Brand or Industry on Earth</div>
+      <h1 class="hero-title">Brand & Industry <span class="gradient-text">Analyzer</span></h1>
+      <p class="hero-subtitle">Enter <strong>any</strong> brand or industry — get instant PESTEL, SWOT, Porter's Five Forces, industry gaps & strategic recommendations. Powered by <strong>Gemini AI</strong>.</p>
+      <div class="search-container">
+        <div class="search-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search any brand or industry..." autocomplete="off" />
+          <button id="searchBtn" class="search-btn">Analyze →</button>
+        </div>
+        <div id="autocomplete" class="autocomplete-list"></div>
+      </div>
+      <div class="hero-actions">
+        <button id="settingsBtn" class="settings-btn">⚙️ Set AI API Key (Free)</button>
+      </div>
+
+      <!-- Recently Analyzed -->
+      <div id="historySection" class="history-section" style="display:none;">
+        <h3 class="section-label">🕐 Recently Analyzed</h3>
+        <div id="historyList" class="history-list"></div>
+      </div>
+
+      <!-- Category Explorer -->
+      <div class="category-explorer">
+        <!-- Tab Switcher -->
+        <div class="cat-tabs">
+          <button class="cat-tab active" data-cat="industries">🏭 Industries</button>
+          <button class="cat-tab" data-cat="indianBrands">🇮🇳 Indian Brands</button>
+          <button class="cat-tab" data-cat="globalBrands">🌍 Global Brands</button>
+        </div>
+        <div id="categoryGrid" class="category-grid"></div>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal-overlay" style="display:none;">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>🔑 AI API Key Setup</h3>
+          <button id="closeModal" class="modal-close">✕</button>
+        </div>
+          <p>To analyze <strong>any</strong> brand or industry, enter your free Google Gemini API key.</p>
+          <ol class="setup-steps">
+            <li>Go to <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a></li>
+            <li>Click <strong>"Create API Key"</strong> (free, no credit card needed)</li>
+            <li>Copy the key and paste it below</li>
+          </ol>
+          <div class="api-input-group">
+            <input type="password" id="apiKeyInput" class="api-key-input" placeholder="Paste your Gemini API key here..." />
+            <button id="toggleKeyVisibility" class="toggle-key-btn">👁️</button>
+          </div>
+          <div class="modal-actions">
+            <button id="saveApiKey" class="save-key-btn">Save & Verify Key</button>
+            <button id="clearApiKey" class="clear-key-btn">Clear Key</button>
+          </div>
+          <p id="apiKeyStatus" class="api-key-status"></p>
+          <p class="api-note">💡 Your key is stored locally. We use <strong>Gemini 1.5 Flash</strong> for maximum free-tier compatibility.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display:none;">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h3 class="loading-title">Analyzing with AI...</h3>
+        <p class="loading-subtitle" id="loadingText">Generating comprehensive strategic analysis</p>
+        <div class="loading-steps">
+          <span class="loading-step" id="step1">📊 Building PESTEL Analysis...</span>
+          <span class="loading-step" id="step2">⚡ Evaluating Porter's Five Forces...</span>
+          <span class="loading-step" id="step3">🎯 Crafting SWOT Matrix...</span>
+          <span class="loading-step" id="step4">💡 Generating Recommendations...</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Section -->
+  <section id="dashboard" class="dashboard" style="display:none;">
+    <div class="dashboard-header">
+      <button id="backBtn" class="back-btn">← New Search</button>
+      <h2 id="dashboardTitle" class="dashboard-title"></h2>
+      <div class="dashboard-actions">
+        <button id="refreshBtn" class="action-btn refresh-btn" title="Re-analyze with AI">🔄 Refresh AI</button>
+        <button id="exportBtn" class="action-btn export-btn" title="Export as PDF">📄 Export PDF</button>
+        <button id="shareBtn" class="action-btn share-btn" title="Share my analysis">📤 Share</button>
+        <button id="compareBtn" class="action-btn compare-btn" title="Compare with another">⚖️ Compare</button>
+      </div>
+    </div>
+
+    <!-- Dashboard Tabs -->
+    <div class="dash-tabs">
+      <button class="dash-tab active" data-section="all">📋 All</button>
+      <button class="dash-tab" data-section="overview">📊 Overview</button>
+      <button class="dash-tab" data-section="pestel">🌍 PESTEL</button>
+      <button class="dash-tab" data-section="porter">⚡ Porter's</button>
+      <button class="dash-tab" data-section="swot">🎯 SWOT</button>
+      <button class="dash-tab" data-section="gaps">🔎 Gaps</button>
+      <button class="dash-tab" data-section="recs">💡 Recs</button>
+      <button class="dash-tab" data-section="ansoff">🗺️ Ansoff</button>
+      <button class="dash-tab" data-section="valuechain">🔗 Value Chain</button>
+    </div>
+
+    <!-- Compare Bar -->
+    <div id="compareBar" class="compare-bar" style="display:none;">
+      <div class="compare-bar-inner">
+        <span>⚖️ Compare with:</span>
+        <input type="text" id="compareInput" class="compare-input" placeholder="Enter brand or industry to compare..." />
+        <button id="compareGoBtn" class="compare-go-btn">Compare →</button>
+        <button id="compareCancelBtn" class="compare-cancel-btn">✕</button>
+      </div>
+    </div>
+
+    <!-- Analysis Content — Panel A (primary) -->
+    <div id="analysisContent" class="analysis-content">
+      <!-- Overview Card -->
+      <div class="card overview-card animate-in dash-section" data-section="overview" id="overviewCard">
+        <div class="card-header"><span class="card-icon">📋</span> Overview</div>
+        <p id="overviewText" class="overview-text"></p>
+        <div class="metrics-grid" id="metricsGrid"></div>
+      </div>
+
+      <!-- PESTEL & Porter's Row -->
+      <div class="analysis-row">
+        <div class="card pestel-card animate-in dash-section" data-section="pestel" id="pestelCard">
+          <div class="card-header"><span class="card-icon">🌍</span> PESTEL Analysis</div>
+          <div class="pestel-grid" id="pestelGrid"></div>
+        </div>
+        <div class="card porter-card animate-in dash-section" data-section="porter" id="porterCard">
+          <div class="card-header"><span class="card-icon">⚡</span> Porter's Five Forces</div>
+          <div class="porter-list" id="porterList"></div>
+        </div>
+      </div>
+
+      <!-- SWOT -->
+      <div class="card swot-card animate-in dash-section" data-section="swot" id="swotCard">
+        <div class="card-header"><span class="card-icon">🎯</span> SWOT Analysis</div>
+        <div class="swot-grid" id="swotGrid">
+          <div class="swot-quadrant swot-strengths"><h4>💪 Strengths</h4><ul id="swotStrengths"></ul></div>
+          <div class="swot-quadrant swot-weaknesses"><h4>⚠️ Weaknesses</h4><ul id="swotWeaknesses"></ul></div>
+          <div class="swot-quadrant swot-opportunities"><h4>🚀 Opportunities</h4><ul id="swotOpportunities"></ul></div>
+          <div class="swot-quadrant swot-threats"><h4>🔥 Threats</h4><ul id="swotThreats"></ul></div>
+        </div>
+      </div>
+
+      <!-- Gaps & Recommendations Row -->
+      <div class="analysis-row">
+        <div class="card gaps-card animate-in dash-section" data-section="gaps" id="gapsCard">
+          <div class="card-header"><span class="card-icon">🔎</span> Industry Gaps</div>
+          <div id="gapsList" class="gaps-list"></div>
+        </div>
+        <div class="card recs-card animate-in dash-section" data-section="recs" id="recsCard">
+          <div class="card-header"><span class="card-icon">💡</span> Strategic Recommendations</div>
+          <div id="recsList" class="recs-list"></div>
+        </div>
+      </div>
+
+      <!-- Ansoff Matrix -->
+      <div class="card ansoff-card animate-in dash-section" data-section="ansoff" id="ansoffCard">
+        <div class="card-header"><span class="card-icon">🗺️</span> Ansoff Strategic Matrix</div>
+        <div id="ansoffGrid" class="ansoff-grid"></div>
+      </div>
+
+      <!-- Value Chain -->
+      <div class="card value-chain-card animate-in dash-section" data-section="valuechain" id="valueChainCard">
+        <div class="card-header"><span class="card-icon">🔗</span> Value Chain Analysis</div>
+        <div id="valueChainContent" class="value-chain-content"></div>
+      </div>
+    </div>
+
+    <!-- Compare Panel B -->
+    <div id="comparePanel" class="compare-panel" style="display:none;">
+      <div class="compare-panel-header">
+        <h3 id="comparePanelTitle">Comparing...</h3>
+        <button id="closeCompare" class="compare-close-btn">✕ Close Comparison</button>
+      </div>
+      <div id="compareContent" class="analysis-content compare-content"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="public-footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">Strategic <span class="gradient-text">Analyzer</span></div>
+          <p>Professional AI-powered strategic analysis tool built for MBA excellence.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Experience</h4>
+          <a href="#" class="footer-link">Portfolio</a>
+          <a href="https://www.linkedin.com/in/vashu-singhal/" target="_blank" class="footer-link">LinkedIn</a>
+          <a href="#" class="footer-link">MBA Projects</a>
+        </div>
+        <div class="footer-cta">
+          <h4>Support the Project</h4>
+          <p>If this tool helped your research, consider supporting its development!</p>
+          <a href="https://buymeacoffee.com/vashusinghal" target="_blank" class="support-btn">
+            <span>☕ Buy Me a Coffee</span>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-info">
+          <span>Created with ❤️ by <strong>Vashu Singhal</strong></span>
+          <span class="dot">•</span>
+          <span id="sourceLabel" class="source-label"></span>
+        </div>
+        <div class="footer-legal">
+          &copy; 2026 Brand Analyzer • For Academic & Strategic Use
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <script src="data.js"></script>
+  <script src="app.js?v=1.0.1"></script>
+</body>
+</html>
